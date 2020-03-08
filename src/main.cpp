@@ -118,8 +118,6 @@ int main() {
 
           int prev_size = previous_path_x.size();
 
-          // 1. PREDICTION : Analysing other cars positions.
-
           double car_s_t = car_s; // save the current position of the car
 
           if (prev_size > 0) {
@@ -194,76 +192,6 @@ int main() {
             ref_vel += MAX_ACC;
           }
 
-
-//          if (too_close){
-//            ref_vel -= MAX_ACC;
-//          }
-//          else if (ref_vel < MAX_VEL)
-//          {
-//            ref_vel += MAX_ACC;
-//          }
-
-
-          /*
-
-          // 1. PREDICTION : Analysing other cars positions.
-          car_ahead = false;
-          car_left = false;
-          car_right = false;
-
-          for ( int i = 0; i < sensor_fusion.size(); i++ ) {
-              float d = sensor_fusion[i][6];
-              int other_car_lane = INVALID_LANE;
-
-              // Determine the lane of the other car
-              if ( d > 0 && d < LEFT_LANE_MAX ) {
-                  other_car_lane = LEFT_LANE;
-              } else if ( d > LEFT_LANE_MAX && d < MIDDLE_LANE_MAX ) {
-                  other_car_lane = MIDDLE_LANE;
-              } else if ( d > MIDDLE_LANE_MAX && d < RIGHT_LANE_MAX ) {
-                  other_car_lane = RIGHT_LANE;
-              }
-              if (other_car_lane == INVALID_LANE) {
-                  continue;
-              }
-
-              // Determine the speed of the other car
-              double vx = sensor_fusion[i][3];
-              double vy = sensor_fusion[i][4];
-              double check_speed = sqrt(vx*vx + vy*vy);
-              double check_car_s = sensor_fusion[i][5];
-
-              // Estimate the other car's position after executing previous trajectory
-              check_car_s += (double) prev_size * 0.02 * check_speed;
-
-              if ( other_car_lane == lane ) {
-                  // Other car is in the same lane
-                  car_ahead |= check_car_s > car_s && check_car_s - car_s < DISTANCE_AHEAD;
-              } else if ( other_car_lane - lane == -1 ) {
-                  // Other car is on the left lane
-                  car_left |= car_s - DISTANCE_AHEAD < check_car_s && car_s + DISTANCE_AHEAD > check_car_s;
-              } else if ( other_car_lane - lane == 1 ) {
-                  // Other car is on the right lane
-                  car_right |= car_s - DISTANCE_AHEAD < check_car_s && car_s + DISTANCE_AHEAD > check_car_s;
-              }
-          }
-
-          // 2. BEHAVIOR: Trigger State Changes Depending If Road Clear of Vehicle Ahead
-          if (car_ahead) {
-              // Execute 'CarAhead' trigger on state machine
-              fsm.execute(Triggers::CarAhead);
-          } else {
-              // Execute 'Clear' trigger on state machine
-              fsm.execute(Triggers::Clear);
-          }
-
-          */
-
-
-          // 3. TRAJECTORY: Calculate trajectory for the car to follow
-
-          // Create a list of widely spaced (x,y) waypoints, evenly spaced at 30m
-          // later interpolate waypoints with spline and fill in more waypoints
 
           vector<double> ptsx;
           vector<double> ptsy;
@@ -354,12 +282,6 @@ int main() {
           // Fill up the rest of the path planner after filling it with previous points
           // Always 50 points will be output
           for (int i=0; i <= 50-previous_path_x.size(); i++) {
-
-//            if ( ref_vel > MAX_VEL ) {
-//              ref_vel = MAX_VEL;
-//            } else if ( ref_vel < MAX_ACC ) {
-//              ref_vel = MAX_ACC;
-//            }
 
             double N = (target_dist/(0.02*ref_vel/2.24));
             double x_point = x_add_on+(target_x)/N;
