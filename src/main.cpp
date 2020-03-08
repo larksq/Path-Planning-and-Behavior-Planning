@@ -144,9 +144,7 @@ int main() {
             // Estimate the other car's position after executing previous trajectory
             other_car_s += (double) prev_size * 0.02 * check_speed / 50;
 
-//            if (abs(other_car_s_t_tn - car_s_t) < SIDE_COLLISION_BOUND){
             if (abs(other_car_s - car_s) < SIDE_COLLISION_BOUND){
-//              std::cout << d_bias << std::endl;
               if (d_bias>0) {
                 if (d_bias < (D_COLLISION_BOUND + LANE_WIDTH))
                 {

@@ -22,6 +22,34 @@ Each waypoint in the list contains  [x,y,s,dx,dy] values. x and y are the waypoi
 
 The highway's waypoints loop around so the frenet s value, distance along the road, goes from 0 to 6945.554.
 
+## Model Documentation
+
+### How to generate the path
+
+As introduced in the guild video, I create a points set with 5 points in it. These points are: 
+
+- Previous Position of the car: derived by using current angle
+- Current Position of the car
+- 30 meters ahead of the target lane
+- 60 meters ahead of the target lane
+- 90 meters ahead of the target lane
+
+The target lane is usually the current lane of the car. While the car is changing the lane, the target lane is the new lane.
+
+These guild points are feed into the spline model and will generate a smooth path (line) guided by these points. The line will be break up with equal distance into 30 points. These points are filled up to the path and combine a path with 50 points in it.
+
+### How to give proper behavior 
+
+![States and Logics](Logic.png)
+
+As shown in the graph, there are two logic checking here, lateral checking and longitudinal checking. 
+
+Firstly, as shown in the left of the graph, I am doing lateral checking to see whether the left and right of the car is clear. This state will be used later for lane changing behavior control. I am using the prediction position of our car and other cars to make the decision. The code is from line 147 to 161 in the main.cpp file.
+
+Secondly, as shown in the right of the graph, I am doing longitudinal check to see whether there is a car in front of us. This state will be used later for speed control. I am using the current position of the car to filter the cars behind us and using the predicted position with the current position of the other cars to do distance checking. This is considering the car in front might break hard at any time. So we used the current position instead of the predicted future position of the other cars.
+
+Finally, if there is a car in front of us, I checked if left or right side of our car is clear. If any side is clear, then make a lane change. Otherwise, I make the car to slow down. In the end, the car will make a lane changing as soon as there is space in the other lanes. 
+
 ## Basic Build Instructions
 
 1. Clone this repo.
