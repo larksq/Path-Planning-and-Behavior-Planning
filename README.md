@@ -38,15 +38,21 @@ The target lane is usually the current lane of the car. While the car is changin
 
 These guild points are feed into the spline model and will generate a smooth path (line) guided by these points. The line will be break up with equal distance into 30 points. These points are filled up to the path and combine a path with 50 points in it.
 
-### How to give proper behavior 
+### How to give proper behavior /Users/sunciao/Documents/Self-Driving/CarND-Path-Planning-Project-master/Path-Planning-and-Behavior-Planning/Logic1.png
 
-![States and Logics](Logic.png)
+/Users/sunciao/Documents/Self-Driving/CarND-Path-Planning-Project-master/Path-Planning-and-Behavior-Planning/Logic2.png
+/Users/sunciao/Documents/Self-Driving/CarND-Path-Planning-Project-master/Path-Planning-and-Behavior-Planning/Logic1.png
+
 
 As shown in the graph, there are two logic checking here, lateral checking and longitudinal checking. 
 
-Firstly, as shown in the left of the graph, I am doing lateral checking to see whether the left and right of the car is clear. This state will be used later for lane changing behavior control. I am using the prediction position of our car and other cars to make the decision. The code is from line 147 to 161 in the main.cpp file.
+![States and Logics](Logic1.png)
 
-Secondly, as shown in the right of the graph, I am doing longitudinal check to see whether there is a car in front of us. This state will be used later for speed control. I am using the current position of the car to filter the cars behind us and using the predicted position with the current position of the other cars to do distance checking. This is considering the car in front might break hard at any time. So we used the current position instead of the predicted future position of the other cars.
+Firstly, as shown in the graph, I am doing lateral checking to see whether the left and right of the car is clear. This state will be used later for lane changing behavior control. I am using the prediction position of our car and other cars to make the decision. The code is from line 147 to 161 in the main.cpp file.
+
+![States and Logics](Logic2.png)
+
+Secondly, as shown in the graph, I am doing longitudinal check to see whether there is a car in front of us. This state will be used later for speed control. I am using the current position of the car to filter the cars behind us and using the predicted position with the current position of the other cars to do distance checking. This is considering the car in front might break hard at any time. So we used the current position instead of the predicted future position of the other cars.
 
 Finally, if there is a car in front of us, I checked if left or right side of our car is clear. If any side is clear, then make a lane change. Otherwise, I make the car to slow down. In the end, the car will make a lane changing as soon as there is space in the other lanes. 
 
