@@ -38,11 +38,7 @@ The target lane is usually the current lane of the car. While the car is changin
 
 These guild points are feed into the spline model and will generate a smooth path (line) guided by these points. The line will be break up with equal distance into 30 points. These points are filled up to the path and combine a path with 50 points in it.
 
-### How to give proper behavior /Users/sunciao/Documents/Self-Driving/CarND-Path-Planning-Project-master/Path-Planning-and-Behavior-Planning/Logic1.png
-
-/Users/sunciao/Documents/Self-Driving/CarND-Path-Planning-Project-master/Path-Planning-and-Behavior-Planning/Logic2.png
-/Users/sunciao/Documents/Self-Driving/CarND-Path-Planning-Project-master/Path-Planning-and-Behavior-Planning/Logic1.png
-
+### How to give proper behavior
 
 As shown in the graph, there are two logic checking here, lateral checking and longitudinal checking. 
 
